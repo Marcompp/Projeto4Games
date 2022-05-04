@@ -5,8 +5,9 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
    float _baseSpeed = 10.0f;
-   float _gravidade = 9.8f;
-   public float jumpHeight = 100f;
+   float _gravidade = 1f;
+   public float jumpHeight = 10;
+   float y = 0;
 
       //Referência usada para a câmera filha do jogador
    GameObject playerCamera;
@@ -28,15 +29,15 @@ public class PlayerController : MonoBehaviour
         float z = Input.GetAxis("Vertical");
        
        //Verificando se é preciso aplicar a gravidade
-        float y;
         if(!characterController.isGrounded){
-           y = -_gravidade;
+           y -= _gravidade;
         }
         else {
            y = 0;
            if (Input.GetButtonDown("Jump")) {
-               printf("AAAAAAAAAAAAAAAA")
+               //printf("AAAAAAAAAAAAAAAA");
                y+= jumpHeight;
+               y -= _gravidade;
            }
         }
        
@@ -70,7 +71,7 @@ void LateUpdate()
   Debug.DrawRay(playerCamera.transform.position, transform.forward*10.0f, Color.magenta);
   if(Physics.Raycast(playerCamera.transform.position, transform.forward, out hit, 100.0f))
   {
-     Debug.Log(hit.collider.name);
+     //Debug.Log(hit.collider.name);
    }
 }
 }
