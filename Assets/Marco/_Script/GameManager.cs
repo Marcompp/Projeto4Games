@@ -13,6 +13,10 @@ public class GameManager
     public int pontos;
     public bool reset;
 
+    public bool marco;
+    public bool helio;
+    public bool erik;
+
     private static GameManager _instance;
 
 
@@ -33,7 +37,11 @@ public class GameManager
         pontos = 0;
         reset = false;
         gameState = GameState.MENU;
-        Time.timeScale = 1;
+        Time.timeScale = 0;
+
+        marco = false;
+        helio = false;
+        erik = false;
     }
 
     
@@ -51,6 +59,15 @@ public class GameManager
             Reset();
             reset = true;
         }
+        if (gameState == GameState.VICTORY && nextState == GameState.GAME) {
+            Time.timeScale = 1;
+            Reset();
+            reset = true;
+        }
+        if (gameState == GameState.VICTORY && nextState == GameState.MENU) {
+            Reset();
+            reset = true;
+        }
         if (gameState == GameState.MENU && nextState == GameState.GAME) {
             Time.timeScale = 1;
         }
@@ -58,6 +75,9 @@ public class GameManager
             Time.timeScale = 0;
         }
         if (gameState == GameState.GAME && nextState == GameState.GAMEOVER) {
+            Time.timeScale = 0;
+        }
+        if (gameState == GameState.GAME && nextState == GameState.VICTORY) {
             Time.timeScale = 0;
         }
         if (gameState == GameState.PAUSE && nextState == GameState.GAME) {
@@ -72,6 +92,9 @@ public class GameManager
         hp = 2;
         vidas = 3;
         pontos = 0;
+        marco = false;
+        helio = false;
+        erik = false;
     }
 
 }

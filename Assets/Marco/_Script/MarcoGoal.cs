@@ -17,7 +17,10 @@ public class MarcoGoal : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (!gm.marco) {
+            dragon.SetActive(true);
+            sword.SetActive(true);
+        }
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -25,6 +28,7 @@ public class MarcoGoal : MonoBehaviour
         Renderer render = GetComponent<Renderer>();
         //#render.material.color = Color.green;
         //Destroy(dragon);
+        gm.marco = true;
         dragon.SetActive(false);
         sword.SetActive(false);
         }
