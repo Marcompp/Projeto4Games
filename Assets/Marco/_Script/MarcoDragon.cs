@@ -5,11 +5,26 @@ using UnityEngine;
 public class MarcoDragon : MonoBehaviour
 {
     // Start is called before the first frame update
+    public GameObject Rhino;
+    private bool activated;
 
+    GameManager gm;
+    // Start is called before the first frame update
     void Start()
     {
-        
+        gm = GameManager.GetInstance();
+        activated = false;
+        //GameManager.changeStateDelegate += Construir;
     }
+    /*void Construir()
+    {
+        foreach (Transform child in transform)
+            {
+                GameObject.Destroy(child.gameObject);
+            }
+        activated = false;
+        
+    }*/
 
     // Update is called once per frame
     void Update()
@@ -17,9 +32,15 @@ public class MarcoDragon : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other) {
+    private void OnTriggerEnter(Collider col) {
         //start sound;
-        Renderer render = GetComponent<Renderer>();
-        render.material.color = Color.green;
+        //print("tocou");
+        if (col.gameObject.CompareTag("Player")) {
+            if (!activated) {
+                //Renderer render = GetComponent<Renderer>();
+                //render.material.color = Color.green;
+                Instantiate(Rhino, transform.position + new Vector3(-7.1f,-0.5f,-5.6f),transform.rotation * Quaternion.Euler (180f, 270, 180f),transform);
+            }
+        }
         }
 }

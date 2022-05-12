@@ -6,10 +6,12 @@ public class MarcoGoal : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject dragon;
-
+    public GameObject sword;
+    
+    GameManager gm;
     void Start()
     {
-
+        gm = GameManager.GetInstance();
     }
 
     // Update is called once per frame
@@ -21,7 +23,9 @@ public class MarcoGoal : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         //start sound;
         Renderer render = GetComponent<Renderer>();
-        render.material.color = Color.green;
-        Destroy(dragon);
+        //#render.material.color = Color.green;
+        //Destroy(dragon);
+        dragon.SetActive(false);
+        sword.SetActive(false);
         }
 }

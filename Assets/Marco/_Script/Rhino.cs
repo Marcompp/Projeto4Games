@@ -7,6 +7,7 @@ public class Rhino : MonoBehaviour
     float _baseSpeed = 10.0f;
     float _gravidade = 1f;
     private bool running = false;
+    private bool stopped = false;
     private Animator animator;
     CharacterController characterController;
 
@@ -17,33 +18,36 @@ public class Rhino : MonoBehaviour
         gm = GameManager.GetInstance();
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+        
 
-        Invoke("StartRun",1f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (running) {
+        if (running && !stopped) {
             characterController.Move(transform.forward * _baseSpeed * Time.deltaTime);
+            if(!characterController.isGrounded){
+                characterController.Move(transform.up * (-_gravidade)* Time.deltaTime);
+            } 
         }
         else {
-            if (!true){
-                running = true;
-                animator.SetBool("isRunning", true);
-            }
+            running = animator.GetBool("isRunning");
         }
     }
 
-    private void StartRun() {
-        running = true;
-                animator.SetBool("isRunning", true);
-    }
 
     private void OnTriggerEnter(Collider col) {
         //start sound;
+        
         if (col.gameObject.CompareTag("Player")) {
+            //print("MORREU");
             gm.ChangeState(GameManager.GameState.GAMEOVER);
+            Destroy(gameObject);
+        }
+        if (col.gameObject.CompareTag("Wall")) {
+            animator.SetBool("isStopped",true);
+            stopped = true;
         }
     }
 
